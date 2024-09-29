@@ -1,4 +1,4 @@
-import SelectCountry from "@/app/_components/SelectCountry";
+import SelectCountry from "@/src/app/_components/SelectCountry";
 
 export default function Page() {
   // CHANGE
