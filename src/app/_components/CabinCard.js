@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 function CabinCard({ cabin }) {
-  const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
+  const { id, name, max_capacity, regular_price, discount, image } = cabin;
 
   return (
     <div className="flex border-primary-800 border">
@@ -25,7 +25,7 @@ function CabinCard({ cabin }) {
           <div className="flex gap-3 items-center mb-2">
             <UsersIcon className="h-5 w-5 text-primary-600" />
             <p className="text-lg text-primary-200">
-              For up to <span className="font-bold">{maxCapacity}</span> guests
+              For up to <span className="font-bold">{max_capacity}</span> guests
             </p>
           </div>
 
@@ -33,14 +33,14 @@ function CabinCard({ cabin }) {
             {discount > 0 ? (
               <>
                 <span className="text-3xl font-[350]">
-                  ${regularPrice - discount}
+                  ${regular_price - discount}
                 </span>
                 <span className="line-through font-semibold text-primary-600">
-                  ${regularPrice}
+                  ${regular_price}
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-[350]">${regularPrice}</span>
+              <span className="text-3xl font-[350]">${regular_price}</span>
             )}
             <span className="text-primary-200">/ night</span>
           </p>

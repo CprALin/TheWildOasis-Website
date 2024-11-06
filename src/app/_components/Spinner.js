@@ -1,7 +1,5 @@
-import Spinner from '@/src/app/_components/Spinner';
-
 function Spinner() {
-  return <Spinner/>;
+  return <div className='spinner'></div>;
 }
 
 export default Spinner;
