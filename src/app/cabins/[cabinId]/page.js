@@ -1,10 +1,21 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import { getCabin } from "../../_lib/data-service";
+import { getCabin, getCabins } from "../../_lib/data-service";
 import Image from "next/image";
 
 export async function generateMetadata({params}) {
     const { name } = await getCabin(params.cabinId);
     return { title : `Cabin ${name}`};
+}
+
+//function to make a dynamic page into a static page
+export async function genereateStaticParams() {
+    const cabins = await getCabins();
+    
+    cabins.map(cabin => ({
+      cabinId : String(cabin.id)
+    }));
+
+    return ids
 }
 
 export default async function Page({ params }) {
