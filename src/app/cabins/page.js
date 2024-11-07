@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 
+// used for fetch data in the dynamic component
+export const revalidate = 0;
 
 export const metadata = {
     title : "Cabins"

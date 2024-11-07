@@ -1,9 +1,13 @@
-import Counter from "@/src/app/_components/Counter";
+import { unstable_noStore as noStore } from "next/cache";
+
 import CabinCard from "@/src/app/_components/CabinCard";
 import { getCabins } from "../_lib/data-service";
 
+
 export default async function CabinList() {
- 
+  // used to be dynamic instead of revalidate
+  // noStore();
+
   const cabins = await getCabins();  
 
   if(!cabins.length) return null;
