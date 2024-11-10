@@ -107,8 +107,8 @@ export async function getBookedDatesByCabinId(cabinId) {
   const { data, error } = await supabase
     .from('bookings')
     .select('*')
-    .eq('cabinId', cabinId)
-    .or(`startDate.gte.${today},status.eq.checked-in`);
+    .eq('cabin_id', cabinId)
+    .or(`start_date.gte.${today},status.eq.checked-in`);
 
   if (error) {
     console.error(error);

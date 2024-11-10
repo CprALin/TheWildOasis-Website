@@ -2,9 +2,12 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin, getCabins } from "../../_lib/data-service";
 import Image from "next/image";
 import TextExpander from "../../_components/TextExpander";
+import Reservation from "../../_components/Reservation";
+import { Suspense } from "react";
+import Spinner from "../../_components/Spinner";
 
 export async function generateMetadata({params}) {
-    const { name } = await getCabin(params.cabinId);
+    const { name } = await getCabin(await params.cabinId);
     return { title : `Cabin ${name}`};
 }
 
@@ -21,7 +24,13 @@ export async function genereateStaticParams() {
 
 export default async function Page({ params }) {
   
-  const cabin = await getCabin(params.cabinId);
+  const cabin = await getCabin(await params.cabinId);
+  /*   
+  const settings = await getSettings();
+  const bookedDates = await getBookedDatesByCabinId(await params.cabinId); */
+
+  // const [cabin , settings , bookedDates]  = await Promise.all([getCabin(params.cabinId) , getSettings() , getBookedDatesByCabinId(await params.cabinId) ]);
+  
 
   const { id, name, max_capacity, regular_price, discount, image, description } =
     cabin;
@@ -70,9 +79,13 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve {name} today. Pay on arrival.
         </h2>
+
+        <Suspense fallback={<Spinner />}>
+            <Reservation cabin={cabin}/>
+        </Suspense>
       </div>
     </div>
   );
