@@ -38,11 +38,42 @@ export async function singInAction() {
     await signIn('google' , {redirectTo : '/account'}); 
 }
 
+export async function createBooking(bookingData , formData) {
+    const session = await auth();
+    if(!session) throw new Error("You must be logged in");
+
+    /* Object.entries(formData.entries()) */
+
+    const newBooking = {
+        ...bookingData,
+        guestId : session.user.guestId,
+        num_guests : Number(formData.get('num_guests')),
+        observations : formData.get("observations").slice(0 , 1000),
+        extras_price : 0,
+        total_price : bookingData.cabin_price,
+        is_paid : false,
+        has_breakfast : false,
+        status : "unconfirmed"
+    }
+
+    const { error } = await supabase
+        .from('bookings')
+        .insert([newBooking])
+
+    if (error) {
+        console.error(error);
+        throw new Error('Booking could not be created');
+    }
+
+    revalidatePath(`/cabins/${bookingData.cabinId}`);
+    redirect('/cabins/thankyou');
+}
+
 export async function singOutAction() {
     await signOut({redirectTo : "/"});
 }
 
-export async function deleteReservation(bookingId) {
+export async function deleteBooking(bookingId) {
     const session = await auth();
     if(!session) throw new Error("You must be logged in");
 
